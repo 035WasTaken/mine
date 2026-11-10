@@ -1,0 +1,23 @@
+"a" = (/turf,/area)
+"c" = (/turf/wall{icon_state = "base"},/area)
+"d" = (/turf/start,/area)
+"e" = (/turf/floor{icon_state = "base"},/area)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+ccccccccccccccca
+cdeeeeeeeeeeeeca
+ccccccccecceeeca
+ceeceeeeeeceeeca
+ccececccceceeeca
+cceceeeececeeeca
+ccececccceceeeca
+cceeeeeeeeeeeeca
+ccecccceeeeeeeca
+ccccccccccccccca
+"}

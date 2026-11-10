@@ -1,0 +1,186 @@
+macro "base_macro"
+	elem 
+		name = "O"
+		command = ".ooc"
+	elem "start_say"
+		name = "T"
+		command = ".say"
+	elem 
+		name = "`"
+		command = ".admintools"
+	elem 
+		name = "Any"
+		command = ".keydown [[*]]"
+	elem 
+		name = "Any+UP"
+		command = ".keyup [[*]]"
+
+
+window "commandspane"
+	elem "commandspane"
+		type = MAIN
+		pos = 291,0
+		size = 651x543
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		border = sunken
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Commands"
+		is-pane = true
+		can-scroll = vertical
+	elem "commandsgrid"
+		type = GRID
+		pos = 0,0
+		size = 651x543
+		anchor1 = 0,0
+		anchor2 = 100,100
+		border = sunken
+		saved-params = ""
+		cells = 1x0
+		current-cell = 1,3
+		highlight-color = #000000
+		is-list = true
+
+window "infopane"
+	elem "infopane"
+		type = MAIN
+		pos = 291,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Info"
+		is-pane = true
+	elem "infolabel"
+		type = LABEL
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = ""
+		text = "HERE IS SOME INFORMATION.\n\nTHIS IS A GAME.\n\nINFORMATION COMPLETE"
+
+window "inputpane"
+	elem "inputpane"
+		type = MAIN
+		pos = 291,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "input"
+		type = INPUT
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = ""
+
+window "localcommandspane"
+	elem "localcommandspane"
+		type = MAIN
+		pos = 291,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Local"
+		is-pane = true
+		outer-size = 656x538
+		outer-pos = 291,0
+		inner-pos = 8,31
+		screen-size = 1920x1040
+	elem "localcommandsgrid"
+		type = GRID
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = ""
+		cells = 1x0
+		current-cell = 1,1
+		highlight-color = #000000
+		is-list = true
+
+window "mainwindow"
+	elem "mainwindow"
+		type = MAIN
+		pos = 0,0
+		size = 1904x982
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		is-default = true
+		saved-params = "pos;size;is-minimized;is-maximized"
+		macro = "base_macro"
+		outer-size = 1920x1040
+		inner-size = 1904x982
+		inner-pos = 8,31
+		screen-size = 1920x1040
+	elem "tabs"
+		type = TAB
+		pos = 1448,8
+		size = 456x232
+		anchor1 = 100,0
+		anchor2 = 100,0
+		background-color = none
+		saved-params = ""
+		tabs = "infopane,commandspane,localcommandspane"
+		current-tab = "Info,Commands"
+	elem "input"
+		type = CHILD
+		pos = 0,952
+		size = 1896x24
+		anchor1 = 0,100
+		anchor2 = 100,100
+		background-color = none
+		border = line
+		saved-params = "splitter"
+		left = "inputpane"
+		is-vert = false
+		lock = left
+	elem "map"
+		type = CHILD
+		pos = 4,8
+		size = 1436x944
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #000000
+		saved-params = "splitter"
+		left = "mappane"
+		is-vert = true
+		lock = right
+	elem "output"
+		type = OUTPUT
+		pos = 1448,248
+		size = 456x704
+		anchor1 = 100,0
+		anchor2 = 100,100
+		font-family = "PxPlus IBM VGA9"
+		font-size = 12
+		border = sunken
+		saved-params = "max-lines"
+
+window "mappane"
+	elem "mappane"
+		type = MAIN
+		pos = 291,0
+		size = 1473x903
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		border = sunken
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Mine"
+		is-pane = true
+	elem "map1"
+		type = MAP
+		pos = 0,0
+		size = 1473x901
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		border = sunken
+		saved-params = "zoom;letterbox;zoom-mode"
+
