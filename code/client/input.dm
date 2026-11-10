@@ -14,6 +14,7 @@
     New()
         ..()
         winset(src, "input", "focus=false")
+        winset(src, "mappane.map1", "focus=true")
 
     verb/keydown(key as text)
         set hidden = TRUE

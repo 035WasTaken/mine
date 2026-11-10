@@ -9,5 +9,4 @@ mob
     
     Login()
         src.loc = locate(/turf/start)
-        winset(src, "mappane.map1", "focus=true")
         ..()

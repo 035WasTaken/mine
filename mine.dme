@@ -19,11 +19,12 @@
 
 // BEGIN_INCLUDE
 #include "mine.dm"
-#include "code\client\client.dm"
+#include "code\client\input.dm"
 #include "code\client\verbs.dm"
 #include "code\interface\skin.dmf"
-#include "code\mob\input.dm"
 #include "code\mob\mob.dm"
+#include "code\mob\movement.dm"
+#include "code\world\tick.dm"
 #include "code\turf\floor.dm"
 #include "code\turf\turf.dm"
 #include "code\turf\wall.dm"
