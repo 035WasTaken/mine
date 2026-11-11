@@ -24,10 +24,10 @@
 #include "code\interface\skin.dmf"
 #include "code\mob\mob.dm"
 #include "code\mob\movement.dm"
-#include "code\world\tick.dm"
 #include "code\turf\floor.dm"
 #include "code\turf\turf.dm"
 #include "code\turf\wall.dm"
+#include "code\world\tick.dm"
 #include "maps\lounge.dmm"
 // END_INCLUDE
 

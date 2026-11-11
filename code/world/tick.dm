@@ -6,3 +6,8 @@ world/
                 continue
 
             M.process_movement()
+    
+    /// Broadcast output to the world
+    proc/boutput(msg as text)
+        world << msg
+        world.log << msg

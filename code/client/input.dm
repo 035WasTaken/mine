@@ -3,6 +3,11 @@
 #define DIRECTION_KEY_SOUTH "S"
 #define DIRECTION_KEY_WEST "A"
 
+#define FACING_DIRECTION_KEY_NORTH "I"
+#define FACING_DIRECTION_KEY_EAST "L"
+#define FACING_DIRECTION_KEY_SOUTH "K"
+#define FACING_DIRECTION_KEY_WEST "J"
+
 #define MOVEMENT_KEY_SPRINT "SHIFT"
 
 /client/
@@ -43,7 +48,7 @@
     verb/say(msg as text)
         set name = ".say"
 
-        print("[usr] states, \"[msg]\"")
+        world.boutput("[usr] states, \"[msg]\"")
 
     verb/admintools()
         set hidden = TRUE

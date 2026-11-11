@@ -1,4 +1,4 @@
-#define MOVEMENT_TICK_DELAY 3
+#define MOVEMENT_TICK_DELAY 4
 
 mob/
     var/ticks_since_last_move = MOVEMENT_TICK_DELAY
@@ -8,7 +8,7 @@ mob/
 
         if(istype(A, /turf/door))
             var/turf/door/D = A
-            if(A.density)
+            if(D.closed)
                 D.open()
 
     proc/process_movement()
@@ -16,7 +16,12 @@ mob/
             return
         
         var/movement_direction = handle_wasd_movement(src.client.keys_held)
-        src.ticks_since_last_move++
+        var/facing_direction = handle_facing_direction(src.client.keys_held)
+
+        if(facing_direction) // we can use IJKL to make our player face different directions
+            src.dir = facing_direction
+
+        src.ticks_since_last_move = src.ticks_since_last_move >= MOVEMENT_TICK_DELAY ? MOVEMENT_TICK_DELAY : src.ticks_since_last_move + 1
 
         if(!movement_direction)
             return
@@ -26,11 +31,11 @@ mob/
 
         var/newLoc = get_step(src, movement_direction) // this is a surprise tool that'll help us later
         
-        if(try_slide_movement(movement_direction, newLoc))
+        if(handle_move(movement_direction, newLoc))
             src.ticks_since_last_move = 0
 
-
-    proc/try_slide_movement(mdir, newLoc)
+    /// Handles normal player movement while allowing for sliding on walls
+    proc/handle_move(mdir, newLoc)
         if(src.Move(newLoc, mdir))
             return TRUE
         
@@ -48,6 +53,8 @@ mob/
         // we don't reset our tick counter on a failure for uh... because i said so, ok?
         return FALSE
     
+
+    /// Returns the direction to move, based on what keys are being pressed
     proc/handle_wasd_movement(held_keys)
         var/dir = 0
         
@@ -55,5 +62,16 @@ mob/
         if(DIRECTION_KEY_SOUTH in held_keys) dir |= SOUTH
         if(DIRECTION_KEY_EAST in held_keys) dir |= EAST
         if(DIRECTION_KEY_WEST in held_keys) dir |= WEST
+
+        return dir
+
+    /// Returns the new direction to face, based on what key is being pressed
+    proc/handle_facing_direction(held_keys)
+        var/dir = 0
+
+        if(FACING_DIRECTION_KEY_NORTH in held_keys) dir |= NORTH
+        if(FACING_DIRECTION_KEY_SOUTH in held_keys) dir |= SOUTH
+        if(FACING_DIRECTION_KEY_EAST in held_keys) dir |= EAST
+        if(FACING_DIRECTION_KEY_WEST in held_keys) dir |= WEST
 
         return dir

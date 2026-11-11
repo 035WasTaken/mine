@@ -11,9 +11,6 @@ mob/step_size = 8
 
 obj/step_size = 8
 
-proc/print(msg as text)
-	world << msg
-
 /// Output text to a specific client
 proc/coutput(c, msg as text)
 	c << output(msg, "mainwindow.output")
