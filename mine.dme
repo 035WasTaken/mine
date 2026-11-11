@@ -12,6 +12,8 @@
 #define FILE_DIR "icons/turf"
 #define FILE_DIR "sprites"
 #define FILE_DIR "sprites/project"
+#define FILE_DIR "sounds"
+#define FILE_DIR "sounds/mob"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
@@ -19,8 +21,8 @@
 
 // BEGIN_INCLUDE
 #include "mine.dm"
+#include "_std\defines\movement.dm"
 #include "code\client\input.dm"
-#include "code\client\verbs.dm"
 #include "code\interface\skin.dmf"
 #include "code\mob\mob.dm"
 #include "code\mob\movement.dm"
@@ -30,4 +32,3 @@
 #include "code\world\tick.dm"
 #include "maps\lounge.dmm"
 // END_INCLUDE
-

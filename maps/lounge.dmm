@@ -1,24 +1,30 @@
 "a" = (/turf,/area)
 "c" = (/turf/wall{icon_state = "base"},/area)
-"d" = (/turf/start,/area)
-"e" = (/turf/floor{icon_state = "base"},/area)
-"u" = (/turf/door,/area)
+"d" = (/turf/floor/grass{icon_state = "edge_northeast"},/area)
+"e" = (/turf/floor/grass{icon_state = "edge_southwest"},/area)
+"g" = (/turf/floor/grass{icon_state = "edge_west"},/area)
+"h" = (/turf/floor/grass{icon_state = "edge_southeast"},/area)
+"s" = (/turf/floor/grass{icon_state = "edge_northwest"},/area)
+"z" = (/turf/floor/grass{icon_state = "edge_south"},/area)
+"B" = (/turf/floor/grass{icon_state = "edge_north"},/area)
+"Q" = (/turf/floor/grass,/area)
+"V" = (/turf/floor/grass{icon_state = "edge_east"},/area)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaa
-ccccccccccccccca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ccceeeeeueueeeca
-cdeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
-ceeeeeeeeeeeeeca
+asBBBBBBBBBBBBBd
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cgQQQQQQQQQQQQQV
+cezzzzzzzzzzzzzh
 ccccccccccccccca
 "}

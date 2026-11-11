@@ -1,7 +1,6 @@
-#define MOVEMENT_TICK_DELAY 4
-
 mob/
     var/ticks_since_last_move = MOVEMENT_TICK_DELAY
+    var/ticks_since_last_walk = SOUND_WALK_TICK_DELAY
 
     Bump(atom/A)
         ..()
@@ -22,6 +21,7 @@ mob/
             src.dir = facing_direction
 
         src.ticks_since_last_move = src.ticks_since_last_move >= MOVEMENT_TICK_DELAY ? MOVEMENT_TICK_DELAY : src.ticks_since_last_move + 1
+        src.ticks_since_last_walk = src.ticks_since_last_walk >= SOUND_WALK_TICK_DELAY ? SOUND_WALK_TICK_DELAY : src.ticks_since_last_walk + 1
 
         if(!movement_direction)
             return
@@ -31,8 +31,16 @@ mob/
 
         var/newLoc = get_step(src, movement_direction) // this is a surprise tool that'll help us later
         
-        if(handle_move(movement_direction, newLoc))
-            src.ticks_since_last_move = 0
+        if(!handle_move(movement_direction, newLoc))
+            return
+        
+        src.ticks_since_last_move = 0
+
+        if(src.ticks_since_last_walk >= SOUND_WALK_TICK_DELAY)
+            world.boutput("DEBUG: Trying to trigger sound") // let's move this to an actual logger at some point. it seems kinda reasonable at this rate.
+            play_walk_sound(src, src.loc)
+            src.ticks_since_last_walk = 0
+
 
     /// Handles normal player movement while allowing for sliding on walls
     proc/handle_move(mdir, newLoc)
@@ -75,3 +83,7 @@ mob/
         if(FACING_DIRECTION_KEY_WEST in held_keys) dir |= WEST
 
         return dir
+    
+    proc/play_walk_sound(mob/M, turf/T)
+        // we're going to do a really simple, nothingburger implementation first just to see if i can even get the sound to play
+        T << sound("sounds/mob/turf/walk/walk_grass_1.wav", FALSE, TRUE)

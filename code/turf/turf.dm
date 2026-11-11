@@ -2,7 +2,7 @@
 
 /turf
     start
-        icon = 'icons/turf/start.dmi'
+        icon = 'icons/turf/floor/detail/detail_skull.dmi'
     
     
     door

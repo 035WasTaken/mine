@@ -1,15 +1,3 @@
-#define DIRECTION_KEY_NORTH "W"
-#define DIRECTION_KEY_EAST "D"
-#define DIRECTION_KEY_SOUTH "S"
-#define DIRECTION_KEY_WEST "A"
-
-#define FACING_DIRECTION_KEY_NORTH "I"
-#define FACING_DIRECTION_KEY_EAST "L"
-#define FACING_DIRECTION_KEY_SOUTH "K"
-#define FACING_DIRECTION_KEY_WEST "J"
-
-#define MOVEMENT_KEY_SPRINT "SHIFT"
-
 /client/
     var/list/keys_held = list()
     var/list/directions = list(NORTH, EAST, SOUTH, WEST)
@@ -49,6 +37,12 @@
         set name = ".say"
 
         world.boutput("[usr] states, \"[msg]\"")
+
+    verb/ooc(msg as text)
+        set name = ".ooc"
+        set instant = TRUE
+
+        world.boutput("[usr] (OOC): [msg]")
 
     verb/admintools()
         set hidden = TRUE
