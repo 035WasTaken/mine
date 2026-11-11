@@ -42,3 +42,9 @@
     verb/admintools()
         set hidden = TRUE
         set instant = TRUE
+
+        if(src.permissions_level < 1)
+            coutput(src, "Only administrators can use that command!")
+            return
+        
+        coutput(src, "Permission granted to user [src.ckey]")

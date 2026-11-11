@@ -15,4 +15,6 @@ mob
     
     Login()
         src.loc = locate(/turf/start)
+        src.client.check_permissions_level(src.client)
+        
         ..()
