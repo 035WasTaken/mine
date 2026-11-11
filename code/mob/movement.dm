@@ -86,4 +86,4 @@ mob/
     
     proc/play_walk_sound(mob/M, turf/T)
         // we're going to do a really simple, nothingburger implementation first just to see if i can even get the sound to play
-        T << sound("sounds/mob/turf/walk/walk_grass_1.wav", FALSE, TRUE)
+        T << sound(SOUND_WALK_GRASS_1, FALSE, TRUE, volume = 15)
