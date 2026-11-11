@@ -2,6 +2,7 @@
 "c" = (/turf/wall{icon_state = "base"},/area)
 "d" = (/turf/start,/area)
 "e" = (/turf/floor{icon_state = "base"},/area)
+"u" = (/turf/door,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
@@ -10,7 +11,7 @@ ceeeeeeeeeeeeeca
 ceeeeeeeeeeeeeca
 ceeeeeeeeeeeeeca
 ceeeeeeeeeeeeeca
-ccceeeeeeeeeeeca
+ccceeeeeueueeeca
 cdeeeeeeeeeeeeca
 ceeeeeeeeeeeeeca
 ceeeeeeeeeeeeeca

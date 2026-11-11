@@ -3,6 +3,14 @@
 mob/
     var/ticks_since_last_move = MOVEMENT_TICK_DELAY
 
+    Bump(atom/A)
+        ..()
+
+        if(istype(A, /turf/door))
+            var/turf/door/D = A
+            if(A.density)
+                D.open()
+
     proc/process_movement()
         if(!src.client)
             return
