@@ -1,19 +1,19 @@
 macro "base_macro"
 	elem 
 		name = "O"
-		command = ".ooc"
+		command = "ooc"
 	elem "start_say"
 		name = "T"
-		command = ".say"
+		command = "say"
 	elem 
 		name = "`"
-		command = ".admintools"
+		command = "admintools"
 	elem 
 		name = "Any"
-		command = ".keydown [[*]]"
+		command = "keydown [[*]]"
 	elem 
 		name = "Any+UP"
-		command = ".keyup [[*]]"
+		command = "keyup [[*]]"
 
 
 window "commandspane"
