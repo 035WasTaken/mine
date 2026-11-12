@@ -5,9 +5,14 @@
 mob/
     var/ticks_since_last_move = MOVEMENT_TICK_DELAY
     var/ticks_since_last_walk = SOUND_WALK_TICK_DELAY
+    var/movement_tick_delay = MOVEMENT_TICK_DELAY
 
     var/is_crouching = FALSE
     var/is_sprinting = FALSE
+
+    // Keep the modifier result separate from the mob's current step_size to prevent accumulation.
+    var/movement_speed_before_modifiers = MOB_DEFAULT_STEP_SIZE
+    var/movement_speed = MOB_DEFAULT_STEP_SIZE
 
     Bump(atom/A)
         ..()
@@ -29,20 +34,22 @@ mob/
             src.dir = facing_direction
 
         // saturated counters so we don't have to worry about eventual overflow
-        src.ticks_since_last_move = src.ticks_since_last_move >= MOVEMENT_TICK_DELAY ? MOVEMENT_TICK_DELAY : src.ticks_since_last_move + 1
+        src.ticks_since_last_move = src.ticks_since_last_move >= src.movement_tick_delay ? src.movement_tick_delay : src.ticks_since_last_move + 1
         src.ticks_since_last_walk = src.ticks_since_last_walk >= SOUND_WALK_TICK_DELAY ? SOUND_WALK_TICK_DELAY : src.ticks_since_last_walk + 1
+
+        src.handle_movement_modifiers()
 
         if(!movement_direction) // if they aren't moving why would we do anything
             return
 
-        if(src.ticks_since_last_move < MOVEMENT_TICK_DELAY) // can't move if our tick counter hasn't saturated
+        if(src.ticks_since_last_move < src.movement_tick_delay) // can't move if our tick counter hasn't saturated
             return
 
         var/new_loc = get_step(src, movement_direction) // this is a surprise tool that'll help us later
         
         if(!handle_move(movement_direction, new_loc)) // try to move. if we don't, exit out and run this next tick.
             return
-        
+
         src.ticks_since_last_move = 0
 
         if(src.ticks_since_last_walk >= SOUND_WALK_TICK_DELAY)
@@ -70,6 +77,20 @@ mob/
         // we don't reset our tick counter on a failure. this means failing to move won't force you to wait another MOVEMENT_TICK_DELAY ticks before you can. more responsive.
         return FALSE
     
+    proc/handle_movement_modifiers()
+        src.handle_movement_states(src.client.keys_held)
+        src.movement_tick_delay = MOVEMENT_TICK_DELAY
+        src.movement_speed = src.movement_speed_before_modifiers
+
+        if(src.is_crouching)
+            src.movement_tick_delay = MOVEMENT_TICK_DELAY * 2
+            src.movement_speed -= MOB_DEFAULT_STEP_SIZE / 2
+        else if(src.is_sprinting)
+            src.movement_tick_delay = MOVEMENT_TICK_DELAY / 2
+            src.movement_speed += MOB_DEFAULT_STEP_SIZE
+
+        src.step_size = src.movement_speed
+
 
     /// Returns the direction to move, based on what keys are being pressed
     proc/handle_wasd_movement(held_keys)
@@ -93,6 +114,27 @@ mob/
 
         return dir
     
+    /// Manages all of our general various movement states. Returns a boolean based on whether the state was updated or not each tick.
+    proc/handle_movement_states(held_keys)
+        var/updated = FALSE
+        var/state_updated = FALSE
+
+        if(MOVEMENT_KEY_SPRINT in held_keys)
+            state_updated = src.do_sprint()
+        else
+            state_updated = src.stop_sprint()
+        if(state_updated)
+            updated = TRUE
+
+        if(MOVEMENT_KEY_CROUCH in held_keys)
+            state_updated = src.do_crouch()
+        else
+            state_updated = src.stop_crouch()
+        if(state_updated)
+            updated = TRUE
+
+        return updated
+
     /// Set player state in regards to crouching. Returns a boolean based on whether state was successfully updated.
     proc/do_crouch()
         if(src.is_crouching)
@@ -101,6 +143,7 @@ mob/
         if(src.is_sprinting)
             src.is_sprinting = FALSE
         
+        src.density = 0
         return src.is_crouching = TRUE
         
     /// Set player state in regards to sprinting. Returns a boolean based on whether state was successfully updated.
@@ -120,6 +163,7 @@ mob/
         
         src.is_crouching = FALSE
 
+        src.density = 1
         return TRUE
 
     /// Unset player state in regards to sprinting. Returns a boolean based on whether state was successfully updated.
