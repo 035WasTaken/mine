@@ -2,9 +2,6 @@
     var/list/keys_held = list()
     var/list/directions = list(NORTH, EAST, SOUTH, WEST)
 
-    var/crouching = FALSE
-    var/sprinting = FALSE
-
     New()
         ..()
         winset(src, "input", "focus=false")

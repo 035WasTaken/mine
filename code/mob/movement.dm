@@ -6,6 +6,9 @@ mob/
     var/ticks_since_last_move = MOVEMENT_TICK_DELAY
     var/ticks_since_last_walk = SOUND_WALK_TICK_DELAY
 
+    var/is_crouching = FALSE
+    var/is_sprinting = FALSE
+
     Bump(atom/A)
         ..()
 
@@ -14,7 +17,8 @@ mob/
             if(D.closed)
                 D.open()
 
-    proc/process_movement() // do not modify movement in this proc, outsource movement mods to other procs. this proc is for handling logic behind movement as a whole
+    /// Handles all underlying player movement logic per tick. Any direction movement modifications should be added to helper procs, then applied here.
+    proc/process_movement()
         if(!src.client)
             return
         
@@ -24,18 +28,19 @@ mob/
         if(facing_direction) // we can use IJKL to make our player face different directions
             src.dir = facing_direction
 
+        // saturated counters so we don't have to worry about eventual overflow
         src.ticks_since_last_move = src.ticks_since_last_move >= MOVEMENT_TICK_DELAY ? MOVEMENT_TICK_DELAY : src.ticks_since_last_move + 1
         src.ticks_since_last_walk = src.ticks_since_last_walk >= SOUND_WALK_TICK_DELAY ? SOUND_WALK_TICK_DELAY : src.ticks_since_last_walk + 1
 
-        if(!movement_direction)
+        if(!movement_direction) // if they aren't moving why would we do anything
             return
 
-        if(src.ticks_since_last_move < MOVEMENT_TICK_DELAY)
+        if(src.ticks_since_last_move < MOVEMENT_TICK_DELAY) // can't move if our tick counter hasn't saturated
             return
 
         var/new_loc = get_step(src, movement_direction) // this is a surprise tool that'll help us later
         
-        if(!handle_move(movement_direction, new_loc))
+        if(!handle_move(movement_direction, new_loc)) // try to move. if we don't, exit out and run this next tick.
             return
         
         src.ticks_since_last_move = 0
@@ -62,7 +67,7 @@ mob/
             if(src.Move(get_step(src, northsouth), northsouth))
                 return TRUE
         
-        // we don't reset our tick counter on a failure for uh... because i said so, ok?
+        // we don't reset our tick counter on a failure. this means failing to move won't force you to wait another MOVEMENT_TICK_DELAY ticks before you can. more responsive.
         return FALSE
     
 
@@ -88,6 +93,45 @@ mob/
 
         return dir
     
+    /// Set player state in regards to crouching. Returns a boolean based on whether state was successfully updated.
+    proc/do_crouch()
+        if(src.is_crouching)
+            return FALSE
+        
+        if(src.is_sprinting)
+            src.is_sprinting = FALSE
+        
+        return src.is_crouching = TRUE
+        
+    /// Set player state in regards to sprinting. Returns a boolean based on whether state was successfully updated.
+    proc/do_sprint()
+        if(src.is_sprinting)
+            return FALSE
+        
+        if(src.is_crouching)
+            src.is_crouching = FALSE
+        
+        return src.is_sprinting = TRUE
+    
+    /// Unset player state in regards to crouching. Returns a boolean based on whether state was successfully updated.
+    proc/stop_crouch()
+        if(!src.is_crouching)
+            return FALSE
+        
+        src.is_crouching = FALSE
+
+        return TRUE
+
+    /// Unset player state in regards to sprinting. Returns a boolean based on whether state was successfully updated.
+    proc/stop_sprint()
+        if(!src.is_sprinting)
+            return FALSE
+        
+        src.is_sprinting = FALSE
+
+        return TRUE
+    
+    /// Checks what turf to play sound on, and what sound to play. Then attempts to play that sound. Returns a boolean based on whether sound *should* be playing or not.
     proc/play_walk_sound(mob/M, turf/T)
         // we're going to do a really simple, nothingburger implementation first just to see if i can even get the sound to play
         T << sound(SOUND_WALK_GRASS_1, FALSE, TRUE, volume = 15)
