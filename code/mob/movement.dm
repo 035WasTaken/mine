@@ -10,7 +10,7 @@ mob/
             if(D.closed)
                 D.open()
 
-    proc/process_movement()
+    proc/process_movement() // do not modify movement in this proc, outsource movement mods to other procs. this proc is for handling logic behind movement as a whole
         if(!src.client)
             return
         
