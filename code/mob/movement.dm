@@ -17,7 +17,7 @@ mob/
             if(D.closed)
                 D.open()
 
-    /// Handles all underlying player movement logic per tick. Any direction movement modifications should be added to helper procs, then applied here.
+    /// Handles all underlying player movement logic per tick. Any direct movement modifications should be added to helper procs, then applied here.
     proc/process_movement()
         if(!src.client)
             return
