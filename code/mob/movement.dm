@@ -29,9 +29,9 @@ mob/
         if(src.ticks_since_last_move < MOVEMENT_TICK_DELAY)
             return
 
-        var/newLoc = get_step(src, movement_direction) // this is a surprise tool that'll help us later
+        var/new_loc = get_step(src, movement_direction) // this is a surprise tool that'll help us later
         
-        if(!handle_move(movement_direction, newLoc))
+        if(!handle_move(movement_direction, new_loc))
             return
         
         src.ticks_since_last_move = 0
@@ -43,8 +43,8 @@ mob/
 
 
     /// Handles normal player movement while allowing for sliding on walls
-    proc/handle_move(mdir, newLoc)
-        if(src.Move(newLoc, mdir))
+    proc/handle_move(mdir, new_loc)
+        if(src.Move(new_loc, mdir))
             return TRUE
         
         var/northsouth = mdir & (NORTH | SOUTH) // check if NORTH or SOUTH are in our current movement direction
