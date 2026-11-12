@@ -1,3 +1,7 @@
+// TODO: im pretty sure this is all done sequentially, per mob.
+// meaning in large servers, this code would start to stutter
+// and lag all mobs over time. proooobably should fix that.
+
 mob/
     var/ticks_since_last_move = MOVEMENT_TICK_DELAY
     var/ticks_since_last_walk = SOUND_WALK_TICK_DELAY

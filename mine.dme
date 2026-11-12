@@ -21,12 +21,12 @@
 
 // BEGIN_INCLUDE
 #include "mine.dm"
+#include "interface\skin.dmf"
 #include "_std\defines\admin.dm"
 #include "_std\defines\movement.dm"
 #include "_std\defines\sounds.dm"
 #include "code\client\client.dm"
 #include "code\client\input.dm"
-#include "code\interface\skin.dmf"
 #include "code\mob\mob.dm"
 #include "code\mob\movement.dm"
 #include "code\turf\floor.dm"
